@@ -5,7 +5,7 @@ import java.io.*;
 import java.net.Socket;
 
 public class ATMClient extends JFrame {
-    private static final String SERVER_HOST = "10.234.114.36"; // 服务器的IP地址或主机名
+    private static final String SERVER_HOST = "10.242.228.90"; // 服务器的IP地址或主机名
     private static final int SERVER_PORT = 2525; // 服务器监听的端口号
 
     private JTextField useridField;
@@ -52,15 +52,13 @@ public class ATMClient extends JFrame {
 
                     // 接收服务器响应
                     String response = in.readLine();
-                    if (response.equals("500 AUTH REQUIRED!")) {
+                    if (response.startsWith("500")) {
                         // 打开密码输入窗口
                         showPasswordInputDialog();
                         dispose(); // 关闭当前窗口
-                    } else if (response.equals("401 ERROR!")) {
+                    } else if (response.startsWith("401")) {
                         // 提示用户名错误，重新输入
                         JOptionPane.showMessageDialog(null, "用户名输入错误，请重新输入。", "错误", JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        // 处理其他响应，根据需求进行修改
                     }
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -103,15 +101,13 @@ public class ATMClient extends JFrame {
 
                     // 接收服务器响应
                     String response = in.readLine();
-                    if (response.equals("525 OK!")) {
+                    if (response.startsWith("525")) {
                         // 密码正确，进入客户端界面
                         showMainGUI();
                         passwordFrame.dispose();
-                    } else if (response.equals("401 ERROR!")) {
+                    } else if (response.startsWith("401")) {
                         // 提示密码错误，重新输入
                         JOptionPane.showMessageDialog(null, "密码错误，请重新输入。", "错误", JOptionPane.ERROR_MESSAGE);
-                    } else {
-                        // 处理其他响应，根据需求进行修改
                     }
                 } catch (IOException ex) {
                     ex.printStackTrace();
